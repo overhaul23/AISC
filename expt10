@@ -1,0 +1,22 @@
+def washing_machine(dirt, grease):
+
+    if dirt <= 30 and grease <= 30:
+        time = 10
+        result = "Short"
+
+    elif dirt <= 60 and grease <= 60:
+        time = 30
+        result = "Medium"
+
+    else:
+        time = 60
+        result = "Long"
+
+    print("\nWashing Duration:", result)
+    print("Recommended Wash Time:", time, "minutes")
+
+
+dirt = int(input("Enter dirt level (0-100): "))
+grease = int(input("Enter grease level (0-100): "))
+
+washing_machine(dirt, grease)

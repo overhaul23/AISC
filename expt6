@@ -1,0 +1,28 @@
+import numpy as np
+
+# Input data
+data = [0.35, 0.40, 0.45, 0.75, 0.80, 0.90]
+
+# Initial weights
+weights = np.array([0.3, 0.8])
+
+# Learning rate
+alpha = 0.5
+
+print("Initial Weights:", weights)
+
+for x in data:
+    # Calculate distances
+    distances = abs(x - weights)
+
+    # Find winner neuron
+    winner = np.argmin(distances)
+
+    # Update winner weight
+    weights[winner] += alpha * (x - weights[winner])
+
+    print("\nInput:", x)
+    print("Winner Neuron:", winner + 1)
+    print("Updated Weights:", weights)
+
+print("\nFinal Weights:", weights)

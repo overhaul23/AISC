@@ -1,0 +1,40 @@
+# Predicate Logic - Library Management System
+
+student = input("Enter Student Name: ")
+book = input("Enter Book Name: ")
+
+issued = input("Is the book issued? (yes/no): ")
+late = int(input("Enter Number of Late Days: "))
+reserved = input("Is the book reserved? (yes/no): ")
+membership = input("Is Membership Active? (yes/no): ")
+paid = input("Has Fine been Paid? (yes/no): ")
+
+print("\n========== FACTS ==========")
+
+print("Student(", student, ")")
+if issued == "yes":
+    print("Issued(", student, ",", book, ")")
+
+print("DaysLate(", student, ",", late, ")")
+
+if reserved == "yes":
+    print("Reserved(", book, ")")
+
+if membership == "yes":
+    print("MembershipActive(", student, ")")
+
+print("\n========== INFERENCE ==========")
+
+if issued == "yes":
+    print("Borrower(", student, ")")
+
+if late > 0:
+    print("Fine(", student, ")")
+
+if reserved == "yes":
+    print("BookUnavailable(", book, ")")
+
+if membership == "yes" and paid == "yes":
+    print("CanBorrowAgain(", student, ")")
+elif late > 0 and paid == "no":
+    print(student, "must pay the fine before borrowing again.")

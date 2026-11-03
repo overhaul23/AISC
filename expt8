@@ -1,0 +1,68 @@
+import numpy as np
+
+# Training data
+X = np.array([
+    [2, 50],
+    [3, 55],
+    [4, 60],
+    [5, 70],
+    [6, 75],
+    [7, 85]
+], dtype=float)
+
+Y = np.array([[0], [0], [0], [1], [1], [1]])
+
+# Normalize data
+X[:, 0] = X[:, 0] / 10
+X[:, 1] = X[:, 1] / 100
+
+# Sigmoid function
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+# Initialize weights and biases
+W1 = np.random.rand(2, 2)
+W2 = np.random.rand(2, 1)
+B1 = np.zeros((1, 2))
+B2 = np.zeros((1, 1))
+
+lr = 0.5
+
+# Training using EBPTA
+for i in range(5000):
+
+    # Forward pass
+    hidden = sigmoid(np.dot(X, W1) + B1)
+    output = sigmoid(np.dot(hidden, W2) + B2)
+
+    # Calculate error
+    error = Y - output
+
+    # Back propagation
+    d_output = error * output * (1 - output)
+    d_hidden = hidden * (1 - hidden) * np.dot(d_output, W2.T)
+
+    # Update weights and biases
+    W2 += lr * np.dot(hidden.T, d_output)
+    W1 += lr * np.dot(X.T, d_hidden)
+
+    B2 += lr * np.sum(d_output, axis=0)
+    B1 += lr * np.sum(d_hidden, axis=0)
+
+print("Training Completed!")
+
+# Test new student
+hours = float(input("Enter Hours Studied: "))
+attendance = float(input("Enter Attendance: "))
+
+new_data = np.array([[hours/10, attendance/100]])
+
+hidden = sigmoid(np.dot(new_data, W1) + B1)
+result = sigmoid(np.dot(hidden, W2) + B2)
+
+if result[0][0] >= 0.5:
+    print("Prediction: Pass")
+else:
+    print("Prediction: Fail")
+
+print("Output Value:", round(result[0][0], 4))
